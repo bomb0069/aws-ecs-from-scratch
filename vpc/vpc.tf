@@ -25,11 +25,11 @@ module "vpc" {
   enable_dns_hostnames = false
 
   private_subnet_tags = {
-    subnet_type = "app"
+    subnet_type = "application"
   }
 
   public_subnet_tags = {
-    subnet_type = "web"
+    subnet_type = "external-alb"
   }
 
   intra_subnet_tags = {
@@ -37,7 +37,7 @@ module "vpc" {
   }
 
   database_subnet_tags = {
-    subnet_type = "db"
+    subnet_type = "database"
   }
 
   tags = {
