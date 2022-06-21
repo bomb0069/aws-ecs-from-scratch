@@ -6,7 +6,7 @@
 #   }
 # }
 
-resource "aws_ecs_cluster" "gtp" {
+resource "aws_ecs_cluster" "cluster" {
   name = local.cluster_name
 
   setting {
@@ -50,8 +50,17 @@ resource "aws_iam_role_policy_attachment" "ecs_full_access_s3_role_policy" {
 }
 
 # AWS Cloud Map
-resource "aws_service_discovery_private_dns_namespace" "gtp" {
+resource "aws_service_discovery_private_dns_namespace" "cluster_dns" {
   name        = local.cluster_name
   description = "private domain for ${local.cluster_name}"
   vpc         = data.aws_vpc.vpc.id
+}
+
+resource "aws_cloudwatch_log_group" "cluster" {
+  name = local.cluster_name
+
+  tags = {
+    Environment = var.environment
+    Application = local.cluster_name
+  }
 }
